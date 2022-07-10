@@ -31,7 +31,7 @@ public class ComponenteValidator implements Validator {
 		Componente comp = (Componente) target;
 		String nome = comp.getNome().trim();
 		String desc = comp.getDescrizione().trim();
-		String tip = comp.getTipologia().trim();
+		String tip = comp.getTipologia();
 
 		if (nome.isEmpty())
 			errors.rejectValue("nome", "required");
@@ -55,6 +55,12 @@ public class ComponenteValidator implements Validator {
 		else if (this.componenteService.alreadyExistsByNome(comp)
 				&& this.componenteService.alreadyExistsByTipologia(comp))
 			errors.rejectValue("nome", "duplicate");
+		
+		//nuovo
+		if( !tip.equals("case") && !tip.equals("scheda madre") && !tip.equals("scheda video")
+			&&	!tip.equals("cpu") && !tip.equals("ram") &&  !tip.equals("alimentatore") 
+			&&	!tip.equals("cooling") && !tip.equals("memoria"))
+			errors.rejectValue("tipologia", "inesistente");
 	}
 
 }
